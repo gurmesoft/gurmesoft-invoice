@@ -4,15 +4,17 @@ namespace GurmesoftInvoice;
 
 class Invoice
 {
-    public function setTaxNumber(string $param)
+
+    protected $lines;
+    protected $date;
+    protected $currency;
+    protected $subTotal;
+    protected $vatTotal;
+    protected $total;
+
+    public function addLine(\GurmesoftInvoice\Line $item)
     {
-        $this->taxNumber = $param;
-        return $this;
-    }
-    
-    public function setTaxOffice(string $param)
-    {
-        $this->taxOffice = $param;
+        $this->lines[] = $item;
         return $this;
     }
 
@@ -22,18 +24,57 @@ class Invoice
         return $this;
     }
 
-    public function getTaxNumber()
+    public function setCurrency(string $param)
     {
-        return $this->taxNumber;
+        $this->currency = $param;
+        return $this;
     }
-    
-    public function getTaxOffice()
+
+    public function setSubTotal(string $param)
     {
-        return $this->taxOffice;
+        $this->subTotal = $param;
+        return $this;
+    }
+
+    public function setVatTotal(string $param)
+    {
+        $this->vatTotal = $param;
+        return $this;
+    }
+
+    public function setTotal(string $param)
+    {
+        $this->total = $param;
+        return $this;
+    }
+
+    public function getLines()
+    {
+        return $this->lines;
     }
     
     public function getDate()
     {
         return $this->date;
+    }
+
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    public function getSubTotal()
+    {
+        return $this->subTotal;
+    }
+
+    public function getVatTotal()
+    {
+        return $this->vatTotal;
+    }
+
+    public function getTotal()
+    {
+        return $this->total;
     }
 }
