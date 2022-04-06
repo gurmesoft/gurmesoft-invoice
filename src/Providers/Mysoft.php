@@ -2,11 +2,18 @@
 
 namespace GurmesoftInvoice\Providers;
 
-class Mysoft extends \GurmesoftInvoice\Providers\BaseProvider
+class Mysoft extends \GurmesoftInvoice\Base\Provider
 {
     public function __construct(array $options)
     {
         $this->prepare($options);
+
+        $requirements = array(
+            'apiUser',
+            'apiPass'
+        );
+        
+        $this->check($requirements, $this);
     }
 
     private function prepare($options)
@@ -17,8 +24,8 @@ class Mysoft extends \GurmesoftInvoice\Providers\BaseProvider
             $this->url = 'https://edocumentapitest.mysoft.com.tr ';
         }
 
-        if (isset($options['apiKey']) && !empty($options['apiKey'])) {
-            $this->apiKey = $options['apiKey'];
+        if (isset($options['apiUser']) && !empty($options['apiUser'])) {
+            $this->apiKey = $options['apiUser'];
         }
 
         if (isset($options['apiPass']) && !empty($options['apiPass'])) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace GurmesoftInvoice;
+namespace GurmesoftInvoice\Base;
 
 class Line
 {

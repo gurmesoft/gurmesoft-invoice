@@ -1,20 +1,27 @@
 <?php
 
-namespace GurmesoftInvoice;
+namespace GurmesoftInvoice\Base;
 
 class Invoice
 {
 
     protected $lines;
+    protected $customer;
     protected $date;
     protected $currency;
     protected $subTotal;
     protected $vatTotal;
     protected $total;
 
-    public function addLine(\GurmesoftInvoice\Line $item)
+    public function addLine(\GurmesoftInvoice\Base\Line $item)
     {
         $this->lines[] = $item;
+        return $this;
+    }
+
+    public function setCustomer(\GurmesoftInvoice\Base\Customer $customer)
+    {
+        $this->customer = $customer;
         return $this;
     }
 
@@ -51,6 +58,11 @@ class Invoice
     public function getLines()
     {
         return $this->lines;
+    }
+
+    public function getCustomer()
+    {
+        return $this->customer;
     }
     
     public function getDate()
