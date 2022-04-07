@@ -33,4 +33,59 @@ class Provider
         $response   = $guzzle->request($type, $url, $options);
         return json_decode($response->getBody()->getContents());
     }
+
+    public function getDocumentType($code)
+    {
+        $types = array(
+            'EARSIVFATURA',
+            'EFATURA',
+            'ESMM',
+            'EMM'
+        );
+        return array_key_exists($code, $types) ? $types[$code] : 'EARSIVFATURA';
+    }
+
+    public function getScenario($code)
+    {
+        $types = array(
+            'EARSIVFATURA',
+            'TEMELFATURA',
+            'TICARIFATURA',
+            'YOLCUBERABERFATURA',
+            'IHRACAT',
+            'OZELFATURA',
+            'KAMU',
+            'HKS',
+            'EARSIVBELGE'
+        );
+        return array_key_exists($code, $types) ? $types[$code] : 'EARSIVFATURA';
+    }
+
+    public function getInvoiceType($code)
+    {
+        $types = array(
+            'SATIS',
+            'IADE',
+            'TEVKIFAT',
+            'ISTISNA',
+            'OZELMATRAH',
+            'IHRACKAYITLI',
+            'SGK',
+            'KOMISYONCU',
+            'HKSSATIS',
+            'HKSKOMISYONCU'
+        );
+        return array_key_exists($code, $types) ? $types[$code] : 'SATIS';
+    }
+
+    public function getCurrencyCode($code)
+    {
+        $types = array(
+            'TRY',
+            'USD',
+            'EUR',
+            'GBP'
+        );
+        return array_key_exists($code, $types) ? $types[$code] : 'TRY';
+    }
 }

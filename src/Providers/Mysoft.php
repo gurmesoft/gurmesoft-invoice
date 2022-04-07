@@ -92,7 +92,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
                 'unitCode'          => $line->getUnitCode(),
                 'productName'       => $line->getName(),
                 'qty'               => $line->getQuantity(),
-                'unitPriceTra'      => $line->getPrice(),
+                'unitPriceTra'      => $line->getUnitPrice(),
                 'vatRate'           => $line->getVatRate(),
                 'amtVatTra'         => $line->getVatTotal(),
                 'amtTra'            => $line->getTotal()
@@ -110,60 +110,46 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             'body'          => json_encode($invoice)
         );
 
-        $response = $this->request($options, $url);
+        $response   = $this->request($options, $url);
+        $result     = new \GurmesoftInvoice\Base\Result;
+        $result->setResponse($response);
+        if ($response->succeed) {
+            $result->setIsSuccess(true)
+            ->setReference($response->data->invoiceETTN);
+        } else {
+            $result->setErrorCode(strval($response->errorCode))
+            ->setErrorMessage($response->message);
+        }
+        
+        return $result;
     }
 
-    private function getDocumentType($code)
+    public function checkStatus($reference)
     {
-        $types = array(
-            'EARSIVFATURA',
-            'EFATURA',
-            'ESMM',
-            'EMM'
+        $token  = $this->token();
+        $url    = '/api/InvoiceOutbox/getInvoiceOutboxStatus';
+        $header = array(
+            'Authorization' => "Bearer {$token}"
         );
-        return array_key_exists($code, $types) ? $types[$code] : 'EARSIVFATURA';
-    }
+        $options = array(
+            'headers'       => $header,
+            'query'         => array(
+                'invoiceETTN'   => $reference
+            )
+        );
 
-    private function getScenario($code)
-    {
-        $types = array(
-            'EARSIVFATURA',
-            'TEMELFATURA',
-            'TICARIFATURA',
-            'YOLCUBERABERFATURA',
-            'IHRACAT','OZELFATURA',
-            'KAMU',
-            'HKS',
-            'EARSIVBELGE'
-        );
-        return array_key_exists($code, $types) ? $types[$code] : 'EARSIVFATURA';
-    }
+        $response   = $this->request($options, $url, 'GET');
+        $result     = new \GurmesoftInvoice\Base\Result;
+        $result->setResponse($response);
+        if ($response->succeed) {
+            $result->setIsSuccess(true)
+            ->setReference($response->data->invoiceETTN)
+            ->setStatus($response->data->invoiceStatusText);
+        } else {
+            $result->setErrorCode(strval($response->errorCode))
+            ->setErrorMessage($response->message);
+        }
 
-    private function getInvoiceType($code)
-    {
-        $types = array(
-            'SATIS',
-            'IADE',
-            'TEVKIFAT',
-            'ISTISNA',
-            'OZELMATRAH',
-            'IHRACKAYITLI',
-            'SGK',
-            'KOMISYONCU',
-            'HKSSATIS',
-            'HKSKOMISYONCU'
-        );
-        return array_key_exists($code, $types) ? $types[$code] : 'SATIS';
-    }
-
-    private function getCurrencyCode($code)
-    {
-        $types = array(
-            'TRY',
-            'USD',
-            'EUR',
-            'GBP'
-        );
-        return array_key_exists($code, $types) ? $types[$code] : 'TRY';
+        return $result;
     }
 }

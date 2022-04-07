@@ -80,11 +80,11 @@ class Line
 
     public function getVatTotal()
     {
-        return ($this->getPrice() / 100 * $this->getVatRate()) * $this->getQuantity();
+        return ($this->getUnitPrice() / 100 * $this->getVatRate()) * $this->getQuantity();
     }
 
     public function getTotal()
     {
-        return $this->getVatTotal() + ($this->getPrice() * $this->getQuantity());
+        return $this->getVatTotal() + ($this->getUnitPrice() * $this->getQuantity());
     }
 }
