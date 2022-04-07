@@ -4,7 +4,6 @@ namespace GurmesoftInvoice\Base;
 
 class Invoice
 {
-
     protected $lines;
     protected $customer;
     protected $date;
