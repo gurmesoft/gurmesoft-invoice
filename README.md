@@ -68,7 +68,7 @@ $document->setId(rand(1111111, 999999))
  * 2 = ESMM
  * 3 = EMM
  *
- * Boş bırakılması durumunda EARSIVFATURA
+ * Atama yapılmaz ise EARSIVFATURA
  */
 ->setDocumentType('0')
 
@@ -87,7 +87,7 @@ $document->setId(rand(1111111, 999999))
  * 7 = EARSIVBELGE
  * 8 = OZELFATURA
  *
- * Boş bırakılması durumunda TEMELFATURA
+ * Atama yapılmaz ise TEMELFATURA
  */
 ->setScenario('0')
 
@@ -106,7 +106,7 @@ $document->setId(rand(1111111, 999999))
  * 8 = HKSSATIS
  * 9 = HKSKOMISYONCU
  *
- * Boş bırakılması durumunda SATIS
+ * Atama yapılmaz ise SATIS
  */
 ->setType('0')
 
@@ -120,7 +120,7 @@ $document->setId(rand(1111111, 999999))
  *
  * Y/m/d H:i:s Formatinda gönderilmelidir.
  *
- * Boş bırakılması durumunda anlık saat baz alınır.
+ * Atama yapılmaz ise anlık saat baz alınır.
  */
 ->setDate('28/04/2022 14:33:58')
 
@@ -139,19 +139,13 @@ $document->setId(rand(1111111, 999999))
  * 2 = EUR
  * 3 = GBP
  *
- * Boş bırakılması durumunda TRY
+ * Atama yapılmaz ise TRY
  */
 ->setCurrency('0')
 
 /**
  * Döviz kuru bilgisidir.
- * TRY için boş bırakılabilir
- */
-->setCurrencyRate('1')
-
-/**
- * Döviz kuru bilgisidir.
- * TRY için boş bırakılabilir
+ * TRY için atama yapılmayabilir
  */
 ->setCurrencyRate('18,2')
 
@@ -240,7 +234,7 @@ $line->setCode('XSYADSA')
 /**
  * Ürün birim fiyatı
  */
-->setPrice(100)
+->setUnitPrice(100)
 /**
  * Ürün vergi oranı
  */

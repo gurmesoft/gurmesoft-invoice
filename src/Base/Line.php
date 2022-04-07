@@ -6,7 +6,7 @@ class Line
 {
     protected $name;
     protected $quantity;
-    protected $price;
+    protected $unitPrice;
     protected $vatRate;
     protected $unitCode;
     protected $stockCode;
@@ -24,9 +24,9 @@ class Line
         return $this;
     }
 
-    public function setPrice(float $param)
+    public function setUnitPrice(float $param)
     {
-        $this->price = $param;
+        $this->unitPrice = $param;
         return $this;
     }
 
@@ -58,9 +58,9 @@ class Line
         return $this->quantity;
     }
 
-    public function getPrice()
+    public function getUnitPrice()
     {
-        return $this->price;
+        return $this->unitPrice;
     }
 
     public function getVatRate()
