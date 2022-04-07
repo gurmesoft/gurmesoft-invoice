@@ -1,6 +1,12 @@
 {
     "name": "gurmesoft/invoice",
+    "description": "E-Fatura oluşturma vendor pakedi",
+    "license": "MIT",
     "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "7.0"
+    },
     "autoload": {
         "psr-4": {
             "GurmesoftInvoice\\": "src/"
