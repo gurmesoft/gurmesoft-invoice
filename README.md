@@ -70,7 +70,7 @@ $document->setId(rand(1111111, 999999))
  *
  * Atama yapılmaz ise EARSIVFATURA
  */
-->setDocumentType('0')
+->setDocumentType('1')
 
 /**
  * Fatura senaryo bilgisidir.
@@ -87,9 +87,9 @@ $document->setId(rand(1111111, 999999))
  * 7 = EARSIVBELGE
  * 8 = OZELFATURA
  *
- * Atama yapılmaz ise TEMELFATURA
+ * Atama yapılmaz ise EARSIVFATURA
  */
-->setScenario('0')
+->setScenario('1')
 
 /**
  * Fatura tipi bilgisidir.
@@ -108,10 +108,12 @@ $document->setId(rand(1111111, 999999))
  *
  * Atama yapılmaz ise SATIS
  */
-->setType('0')
+->setType('6')
 
 /**
  * Ön ek bilgisidir.
+ *
+* Atama yapılmaz ise sistemdeki varsayılan ek baz alınır.
  */
 ->setPrefix('FTR')
 
@@ -141,7 +143,7 @@ $document->setId(rand(1111111, 999999))
  *
  * Atama yapılmaz ise TRY
  */
-->setCurrency('0')
+->setCurrency('1')
 
 /**
  * Döviz kuru bilgisidir.
@@ -153,7 +155,7 @@ $document->setId(rand(1111111, 999999))
  * İade fatura no bilgisidir.
  * Fatura tipi IADE olması durumunda zorunludur.
  */
-->setReferenceNo('')
+->setReferenceNo('XXXXXXXX')
 
 /**
  * Faturaya ait alıcı bilgileri.
@@ -180,7 +182,7 @@ $customer = new GurmesoftInvoice\Base\Customer;
 /**
  * Alıcı Vergi Kimlik No yada Tc Kimlik bilgisi.
  */
-$customer->setTaxNumber('3333333333')
+$customer->setTaxNumber('XXXXXXXXXX')
 
 /**
  * Alıcı Vergi dairesi bilgisi.
@@ -220,9 +222,13 @@ $customer->setTaxNumber('3333333333')
 $line = new GurmesoftInvoice\Base\Line;
 
 /**
- * Ürün kodu
+ * Ürünün entegrasyon üzerindeki kodu
  */
-$line->setCode('XSYADSA')
+$line->setUnitCode('C62')
+/**
+ * Ürün stok kodu
+ */
+->setStockCode('TRLK203845')
 /**
  * Ürün adı
  */

@@ -22,6 +22,11 @@ class Client
         return $this->class->sendInvoice($document);
     }
 
+    public function checkStatus($reference)
+    {
+        return $this->class->checkStatus($reference);
+    }
+
     private function empty($param)
     {
         if (empty($param)) {

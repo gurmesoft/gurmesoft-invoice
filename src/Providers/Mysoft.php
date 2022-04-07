@@ -110,10 +110,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             'body'          => json_encode($invoice)
         );
 
-        var_dump($invoice);
         $response = $this->request($options, $url);
-        var_dump($response);
-        die;
     }
 
     private function getDocumentType($code)
