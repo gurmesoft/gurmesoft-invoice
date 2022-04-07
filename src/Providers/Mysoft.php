@@ -120,11 +120,11 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             $result->setErrorCode(strval($response->errorCode))
             ->setErrorMessage($response->message);
         }
-        
+
         return $result;
     }
 
-    public function checkStatus($reference)
+    public function checkStatus($referenceNo)
     {
         $token  = $this->token();
         $url    = '/api/InvoiceOutbox/getInvoiceOutboxStatus';
@@ -134,7 +134,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         $options = array(
             'headers'       => $header,
             'query'         => array(
-                'invoiceETTN'   => $reference
+                'invoiceETTN'   => $referenceNo
             )
         );
 
@@ -151,5 +151,27 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         }
 
         return $result;
+    }
+
+    public function cancelInvoice($referenceNo, $message, $type)
+    {
+        date_default_timezone_set('Europe/Istanbul');
+        $token  = $this->token();
+        $url    = '/api/InvoiceOutbox/cancelEArchiveInvoice';
+        $header = array(
+            'Authorization' => "Bearer {$token}"
+        );
+        $options = array(
+            'headers'       => $header,
+            'query'         => array(
+                'invoiceETTN'   => $referenceNo,
+                'cancelType'    => $this->getCancelCode($type),
+                'cancelNote'    => $message,
+                'cancelDate'    => date('m/d/Y H:i:s')
+            )
+        );
+
+        $response   = $this->request($options, $url, 'GET');
+        var_dump($response);
     }
 }

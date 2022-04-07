@@ -88,4 +88,16 @@ class Provider
         );
         return array_key_exists($code, $types) ? $types[$code] : 'TRY';
     }
+    
+    public function getCancelCode($code)
+    {
+        $types = array(
+            'GIB',
+            'NOTER',
+            'KEP',
+            'TAAHHUTLUMEKTUP',
+            'PORTAL',
+        );
+        return array_key_exists($code, $types) ? $types[$code] : 'GIB';
+    }
 }

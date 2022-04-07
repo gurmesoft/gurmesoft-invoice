@@ -48,6 +48,8 @@ $options = array(
 $mysoft = new \GurmesoftInvoice\Client('Mysoft', $options);
 ```
 
+## Adım 4
+
 ### Fatura oluşturma
 
 ```php
@@ -169,11 +171,29 @@ $document->setId(rand(1111111, 999999))
  */
 ->addLine($line);
 
-$mysoft->sendInvoice($document);
+$response = $mysoft->sendInvoice($document);
+
+/**
+ * Apiden dönen tüm cevap
+*/
+$response->getResponse();
+
+if ($response->isSuccess()) {
+    /**
+     * Benzersiz fatura referans no
+    */
+    $response->getReference();
+} else {
+    /**
+     * Hata kodu ve mesajı
+    */
+    $response->getErrorCode();
+    $response->getErrorMessage();
+}
 
 ```
 
-### Müşteri oluşturma
+### Fatura için müşteri oluşturma
 
 ```php
 
@@ -215,7 +235,7 @@ $customer->setTaxNumber('XXXXXXXXXX')
 ->setEmail('mail@gurmesoft.com');
 ```
 
-### Satır oluşturma
+### Fatura için satır oluşturma
 
 ```php
 
@@ -246,4 +266,35 @@ $line->setUnitCode('C62')
  */
 ->setVatRate(18);
 
+```
+
+## Adım 5
+
+### Fatura durum sorgulama ve iptali
+
+```php
+
+/**
+ * $referenceNo Fatura oluşturulduğunda benzersiz numara
+*/
+
+$response = $mysoft->checkStatus($referenceNo);
+$response->getStatus();
+
+/**
+ * İptal Nedeni ($message)
+ *
+ * Atama yapılmaz ise İptal Edildi
+ *
+ * İptal Tipi ($type)
+ *
+ * 0 = GIB
+ * 1 = NOTER
+ * 2 = KEP
+ * 3 = TAAHHUTLUMEKTUP
+ * 4 = PORTAL
+ *
+ * Atama yapılmaz ise GIB
+*/
+$response = $mysoft->cancelInvoice($referenceNo,$message,$type);
 ```

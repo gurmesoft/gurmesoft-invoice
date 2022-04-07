@@ -22,9 +22,14 @@ class Client
         return $this->class->sendInvoice($document);
     }
 
-    public function checkStatus($reference)
+    public function cancelInvoice($referenceNo, $message = 'İptal Edildi', $type = '0')
     {
-        return $this->class->checkStatus($reference);
+        return $this->class->cancelInvoice($referenceNo, $message, $type);
+    }
+
+    public function checkStatus($referenceNo)
+    {
+        return $this->class->checkStatus($referenceNo);
     }
 
     private function empty($param)
