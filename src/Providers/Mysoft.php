@@ -60,7 +60,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
     public function sendInvoice($doc)
     {
         $token      = $this->token();
-        $customer   = $doc->getCustomer();
+        $taxpayer   = $doc->getTaxpayer();
         $lines      = $doc->getLines();
         $invoice    = array(
             'isCalculateByApi'      => false,
@@ -76,13 +76,13 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             'currencyCode'          => $this->getCurrencyCode($doc->getCurrency()),
             'currencyRate'          => $doc->getCurrencyRate() ? $doc->getCurrencyRate() : '1',
             'invoiceAccount'        => array(
-                'vknTckn'               => $customer->getTaxNumber(),
-                'taxOfficeName'         => $customer->getTaxOffice(),
-                'accountName'           => $customer->getCompany() ? $customer->getCompany() : $customer->getFirstName() .' '.$customer->getLastName(),
-                'countryName'           => $customer->getCountry(),
-                'cityName'              => $customer->getCity(),
-                'citySubdivision'       => $customer->getDistrict(),
-                'streetName'            => $customer->getAddress(),
+                'vknTckn'               => $taxpayer->getTaxNumber(),
+                'taxOfficeName'         => $taxpayer->getTaxOffice(),
+                'accountName'           => $taxpayer->getCompany() ? $taxpayer->getCompany() : $taxpayer->getFirstName() .' '.$taxpayer->getLastName(),
+                'countryName'           => $taxpayer->getCountry(),
+                'cityName'              => $taxpayer->getCity(),
+                'citySubdivision'       => $taxpayer->getDistrict(),
+                'streetName'            => $taxpayer->getAddress(),
             ),
         );
 
@@ -184,7 +184,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         return $result;
     }
     
-    public function checkCustomerStatus($taxNumber)
+    public function checkTaxpayerStatus($taxNumber)
     {
         $token  = $this->token();
         $url    = '/api/GeneralCard/getGibAccountModel';
@@ -200,7 +200,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
 
         $response   = $this->request($options, $url, 'GET');
         $result     = new \GurmesoftInvoice\Base\Result;
-        
+
         $result->setResponse($response);
         if ($response->data !== null) {
             $result->setIsEFatura(true);

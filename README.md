@@ -163,7 +163,7 @@ $document->setId(rand(1111111, 999999))
  * Faturaya ait mükellef bilgileri.
  * Ayrıntılar için dökümanın devamını inceleyiniz.
  */
-->setCustomer($taxpayer)
+->setTaxpayer($taxpayer)
 
 /**
  * Fatura satırları

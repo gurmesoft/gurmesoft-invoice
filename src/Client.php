@@ -35,10 +35,10 @@ class Client
         return $this->class->checkStatus($referenceNo);
     }
 
-    public function checkCustomerStatus($taxNumber)
+    public function checkTaxpayerStatus($taxNumber)
     {
         $this->empty($taxNumber, 'tax number');
-        return $this->class->checkCustomerStatus($taxNumber);
+        return $this->class->checkTaxpayerStatus($taxNumber);
     }
 
     private function empty($param, $message)

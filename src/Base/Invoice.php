@@ -5,7 +5,7 @@ namespace GurmesoftInvoice\Base;
 class Invoice
 {
     protected $lines;
-    protected $customer;
+    protected $taxpayer;
     protected $id;
     protected $type;
     protected $scenario;
@@ -26,9 +26,9 @@ class Invoice
         return $this;
     }
 
-    public function setCustomer(\GurmesoftInvoice\Base\Customer $customer)
+    public function setTaxpayer(\GurmesoftInvoice\Base\Taxpayer $taxpayer)
     {
-        $this->customer = $customer;
+        $this->taxpayer = $taxpayer;
         return $this;
     }
 
@@ -115,9 +115,9 @@ class Invoice
         return $this->lines;
     }
 
-    public function getCustomer()
+    public function getTaxpayer()
     {
-        return $this->customer;
+        return $this->taxpayer;
     }
     
     public function getId()
