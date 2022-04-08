@@ -9,8 +9,8 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         $this->prepare($options);
 
         $requirements = array(
-        'apiUser',
-        'apiPass'
+            'apiUser',
+            'apiPass'
         );
         
         $this->check($requirements, $this);
@@ -40,17 +40,17 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
     {
         $url    = '/oauth/token';
         $header = array(
-        'Content-Type'  => 'application/x-www-form-urlencoded',
-        'Accept'        => 'application/json'
+            'Content-Type'  => 'application/x-www-form-urlencoded',
+            'Accept'        => 'application/json'
         );
         $body   = array(
-        'username'      => $this->apiUser,
-        'password'      => $this->apiPass,
-        'grant_type'    => 'password'
+            'username'      => $this->apiUser,
+            'password'      => $this->apiPass,
+            'grant_type'    => 'password'
         );
         $options = array(
-        'form_params'   => $body,
-        'headers'       => $header
+            'form_params'   => $body,
+            'headers'       => $header
         );
 
         $response = $this->request($options, $url);
@@ -63,27 +63,27 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         $taxpayer   = $doc->getTaxpayer();
         $lines      = $doc->getLines();
         $invoice    = array(
-        'isCalculateByApi'      => false,
-        'isManuelCalculation'   => false,
-        'invoiceDetail'         => array(),
-        'id'                    => $doc->getId(),
-        'eDocumentType'         => $this->getDocumentType($doc->getDocumentType()),
-        'profile'               => $this->getScenario($doc->getScenario()),
-        'invoiceType'           => $this->getInvoiceType($doc->getType()),
-        'prefix'                => $doc->getPrefix(),
-        'docDate'               => $doc->getDate(),
-        'docTime'               => $doc->getDate(),
-        'currencyCode'          => $this->getCurrencyCode($doc->getCurrency()),
-        'currencyRate'          => $doc->getCurrencyRate() ? $doc->getCurrencyRate() : '1',
-        'invoiceAccount'        => array(
-            'vknTckn'               => $taxpayer->getTaxNumber(),
-            'taxOfficeName'         => $taxpayer->getTaxOffice(),
-            'accountName'           => $taxpayer->getCompany() ? $taxpayer->getCompany() : $taxpayer->getFirstName() .' '.$taxpayer->getLastName(),
-            'countryName'           => $taxpayer->getCountry(),
-            'cityName'              => $taxpayer->getCity(),
-            'citySubdivision'       => $taxpayer->getDistrict(),
-            'streetName'            => $taxpayer->getAddress(),
-        ),
+            'isCalculateByApi'      => false,
+            'isManuelCalculation'   => false,
+            'invoiceDetail'         => array(),
+            'id'                    => $doc->getId(),
+            'eDocumentType'         => $this->getDocumentType($doc->getDocumentType()),
+            'profile'               => $this->getScenario($doc->getScenario()),
+            'invoiceType'           => $this->getInvoiceType($doc->getType()),
+            'prefix'                => $doc->getPrefix(),
+            'docDate'               => $doc->getDate(),
+            'docTime'               => $doc->getDate(),
+            'currencyCode'          => $this->getCurrencyCode($doc->getCurrency()),
+            'currencyRate'          => $doc->getCurrencyRate() ? $doc->getCurrencyRate() : '1',
+            'invoiceAccount'        => array(
+                'vknTckn'               => $taxpayer->getTaxNumber(),
+                'taxOfficeName'         => $taxpayer->getTaxOffice(),
+                'accountName'           => $taxpayer->getCompany() ? $taxpayer->getCompany() : $taxpayer->getFirstName() .' '.$taxpayer->getLastName(),
+                'countryName'           => $taxpayer->getCountry(),
+                'cityName'              => $taxpayer->getCity(),
+                'citySubdivision'       => $taxpayer->getDistrict(),
+                'streetName'            => $taxpayer->getAddress(),
+            ),
         );
 
         foreach ($lines as $line) {
