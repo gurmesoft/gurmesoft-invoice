@@ -6,6 +6,7 @@ use Exception;
 
 class Provider
 {
+    public $provider;
     public $httpOptions;
     
     public function check($requirements, $class)
@@ -37,67 +38,92 @@ class Provider
     public function getDocumentType($code)
     {
         $types = array(
-            'EARSIVFATURA',
-            'EFATURA',
-            'ESMM',
-            'EMM'
+            'Mysoft' => array(
+                'EARSIVFATURA',
+                'EFATURA',
+                'ESMM',
+                'EMM'
+            )
         );
-        return array_key_exists($code, $types) ? $types[$code] : 'EARSIVFATURA';
+
+        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'EARSIVFATURA';
     }
 
     public function getScenario($code)
     {
         $types = array(
-            'EARSIVFATURA',
-            'TEMELFATURA',
-            'TICARIFATURA',
-            'YOLCUBERABERFATURA',
-            'IHRACAT',
-            'OZELFATURA',
-            'KAMU',
-            'HKS',
-            'EARSIVBELGE'
+            'Mysoft' => array(
+                'EARSIVFATURA',
+                'TEMELFATURA',
+                'TICARIFATURA',
+                'YOLCUBERABERFATURA',
+                'IHRACAT',
+                'OZELFATURA',
+                'KAMU',
+                'HKS',
+                'EARSIVBELGE'
+            )
         );
-        return array_key_exists($code, $types) ? $types[$code] : 'EARSIVFATURA';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'EARSIVFATURA';
     }
 
     public function getInvoiceType($code)
     {
         $types = array(
-            'SATIS',
-            'IADE',
-            'TEVKIFAT',
-            'ISTISNA',
-            'OZELMATRAH',
-            'IHRACKAYITLI',
-            'SGK',
-            'KOMISYONCU',
-            'HKSSATIS',
-            'HKSKOMISYONCU'
+            'Mysoft' => array(
+                'SATIS',
+                'IADE',
+                'TEVKIFAT',
+                'ISTISNA',
+                'OZELMATRAH',
+                'IHRACKAYITLI',
+                'SGK',
+                'KOMISYONCU',
+                'HKSSATIS',
+                'HKSKOMISYONCU'
+            )
         );
-        return array_key_exists($code, $types) ? $types[$code] : 'SATIS';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'SATIS';
     }
 
     public function getCurrencyCode($code)
     {
         $types = array(
-            'TRY',
-            'USD',
-            'EUR',
-            'GBP'
+            'Mysoft' => array(
+                'TRY',
+                'USD',
+                'EUR',
+                'GBP'
+            )
         );
-        return array_key_exists($code, $types) ? $types[$code] : 'TRY';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'TRY';
     }
     
     public function getCancelCode($code)
     {
         $types = array(
-            'GIB',
-            'NOTER',
-            'KEP',
-            'TAAHHUTLUMEKTUP',
-            'PORTAL',
+            'Mysoft' => array(
+                'GIB',
+                'NOTER',
+                'KEP',
+                'TAAHHUTLUMEKTUP',
+                'PORTAL'
+            )
         );
-        return array_key_exists($code, $types) ? $types[$code] : 'GIB';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'GIB';
+    }
+
+    public function getUnitCode($code)
+    {
+        $types = array(
+            'Mysoft' => array(
+                'ADET',
+                'KUTU',
+                'LITRE',
+                'M',
+                'CM'
+            )
+        );
+        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'ADET';
     }
 }

@@ -18,7 +18,8 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
 
     private function prepare($options)
     {
-        $this->url = 'https://edocumentapi.mysoft.com.tr';
+        $this->provider = 'Mysoft';
+        $this->url      = 'https://edocumentapi.mysoft.com.tr';
 
         if (isset($options['live']) && $options['live'] === false) {
             $this->url = 'https://edocumentapitest.mysoft.com.tr';
@@ -88,7 +89,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
 
         foreach ($lines as $line) {
             $invoice['invoiceDetail'][] = array(
-                'unitCode'          => $line->getUnitCode(),
+                'unitCode'          => $this->getUnitCode($line->getUnitCode()),
                 'productCode'       => $line->getStockCode(),
                 'productName'       => $line->getName(),
                 'qty'               => $line->getQuantity(),
