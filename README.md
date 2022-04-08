@@ -41,7 +41,7 @@ require 'vendor/autoload.php';
 
 $options = array(
     'live'      => false,                       // Test ortamı için gereklidir.
-    'apıUser'   => 'XXXXXXXX',                  // Aracı firma tarafından verilen anahtar,kullanıcı vb.
+    'apiUser'   => 'XXXXXXXX',                  // Aracı firma tarafından verilen anahtar,kullanıcı vb.
     'apiPass'   => 'XXXXXXXX',                  // Aracı firma tarafından verilen şifre,gizli anahtar vb.
 );
 
@@ -50,7 +50,7 @@ $mysoft = new \GurmesoftInvoice\Client('Mysoft', $options);
 
 ## Adım 4
 
-### Fatura oluşturma
+### 4.1 Fatura oluşturma
 
 ```php
 
@@ -77,7 +77,7 @@ $document->setId(rand(1111111, 999999))
 /**
  * Fatura senaryo bilgisidir.
  * Mükellef GİB e-fatura mükellefi listesinde yer alıyor ise EARSIVFATURA gönderilmelidir.
- * Mükellef sorgusu dökümanda yer almaktadır.
+ * Mükellef sorgusu dökümanda yer almaktadır. (Adım 4.2)
  *
  * 0 = EARSIVFATURA
  * 1 = TEMELFATURA
@@ -160,10 +160,10 @@ $document->setId(rand(1111111, 999999))
 ->setReferenceNo('XXXXXXXX')
 
 /**
- * Faturaya ait alıcı bilgileri.
+ * Faturaya ait mükellef bilgileri.
  * Ayrıntılar için dökümanın devamını inceleyiniz.
  */
-->setCustomer($customer)
+->setCustomer($taxpayer)
 
 /**
  * Fatura satırları
@@ -193,16 +193,29 @@ if ($response->isSuccess()) {
 
 ```
 
-### Fatura için müşteri oluşturma
+### 4.2 Mükellef sorgulama
+
+```php
+/**
+ * $taxNumber Mükellefin vergi kimlik numarası
+ */
+$response = $mysoft->checkCustomerStatus($taxNumber);
+/**
+ * Bool true yada false dönecektir
+ */
+$response->isEFatura()
+```
+
+### 4.3 Fatura için mükellef oluşturma
 
 ```php
 
-$customer = new GurmesoftInvoice\Base\Customer;
+$taxpayer = new GurmesoftInvoice\Base\Taxpayer;
 
 /**
  * Alıcı Vergi Kimlik No yada Tc Kimlik bilgisi.
  */
-$customer->setTaxNumber('XXXXXXXXXX')
+$taxpayer->setTaxNumber('XXXXXXXXXX')
 
 /**
  * Alıcı Vergi dairesi bilgisi.
@@ -235,10 +248,12 @@ $customer->setTaxNumber('XXXXXXXXXX')
 ->setEmail('mail@gurmesoft.com');
 ```
 
-### Fatura için satır oluşturma
+### 4.4 Fatura için satır oluşturma
 
 ```php
-
+/**
+ * Sınıf tekrar türetilerek birden fazla satır ekleyebilirsiniz.
+ */
 $line = new GurmesoftInvoice\Base\Line;
 
 /**
@@ -278,7 +293,7 @@ $line->setUnitCode('C62')
  * $referenceNo Fatura oluşturulduğunda benzersiz numara
 */
 
-$response = $mysoft->checkStatus($referenceNo);
+$response = $mysoft->checkInvoiceStatus($referenceNo);
 $response->getStatus();
 
 /**
@@ -296,5 +311,5 @@ $response->getStatus();
  *
  * Atama yapılmaz ise GIB
 */
-$response = $mysoft->cancelInvoice($referenceNo,$message,$type);
+$response = $mysoft->cancelInvoice($referenceNo, $message, $type);
 ```

@@ -12,7 +12,7 @@ class Client
      */
     public function __construct($provider, $options)
     {
-        $this->empty($provider);
+        $this->empty($provider, 'provider');
         $class = "\\GurmesoftInvoice\\Providers\\$provider";
         $this->class = new $class($options);
     }
@@ -24,18 +24,27 @@ class Client
 
     public function cancelInvoice($referenceNo, $message = 'İptal Edildi', $type = '0')
     {
+        $this->empty($referenceNo, 'reference number');
+
         return $this->class->cancelInvoice($referenceNo, $message, $type);
     }
 
-    public function checkStatus($referenceNo)
+    public function checkInvoiceStatus($referenceNo)
     {
+        $this->empty($referenceNo, 'reference number');
         return $this->class->checkStatus($referenceNo);
     }
 
-    private function empty($param)
+    public function checkCustomerStatus($taxNumber)
+    {
+        $this->empty($taxNumber, 'tax number');
+        return $this->class->checkCustomerStatus($taxNumber);
+    }
+
+    private function empty($param, $message)
     {
         if (empty($param)) {
-            throw new Exception(__CLASS__ . " exception provider cannot be empty.");
+            throw new Exception(__CLASS__ . " exception $message cannot be empty.");
         }
     }
 }

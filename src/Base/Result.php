@@ -4,13 +4,14 @@ namespace GurmesoftInvoice\Base;
 
 class Result
 {
-    protected $response         = false;
+    protected $isSuccess        = false;
+    protected $isEFatura        = false;
     protected $reference        = false;
     protected $status           = false;
     protected $errorMessage     = false;
     protected $errorCode        = false;
-    protected $isSuccess        = false;
-
+    protected $response         = false;
+    
     public function setResponse($param)
     {
         $this->response = $param;
@@ -47,6 +48,11 @@ class Result
         return $this;
     }
 
+    public function setIsEFatura(bool $param)
+    {
+        $this->isEFatura = $param;
+        return $this;
+    }
 
     public function getResponse()
     {
@@ -76,5 +82,10 @@ class Result
     public function isSuccess()
     {
         return $this->isSuccess;
+    }
+
+    public function isEFatura()
+    {
+        return $this->isEFatura;
     }
 }

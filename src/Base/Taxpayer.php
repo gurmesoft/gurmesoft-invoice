@@ -2,7 +2,7 @@
 
 namespace GurmesoftInvoice\Base;
 
-class Customer
+class Taxpayer
 {
     protected $taxNumber;
     protected $taxOffice;
