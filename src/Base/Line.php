@@ -4,13 +4,19 @@ namespace GurmesoftInvoice\Base;
 
 class Line
 {
+    protected $id;
     protected $name;
     protected $quantity;
     protected $unitPrice;
     protected $vatRate;
-    protected $unitCode;
     protected $stockCode;
+    protected $unitCode;
 
+    public function setId(string $param)
+    {
+        $this->id = $param;
+        return $this;
+    }
 
     public function setName(string $param)
     {
@@ -48,6 +54,11 @@ class Line
         return $this;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -67,7 +78,7 @@ class Line
     {
         return $this->vatRate;
     }
-
+    
     public function getStockCode()
     {
         return $this->stockCode;

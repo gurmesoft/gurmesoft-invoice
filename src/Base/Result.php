@@ -6,8 +6,10 @@ class Result
 {
     protected $isSuccess        = false;
     protected $isEFatura        = false;
+    protected $product          = false;
     protected $reference        = false;
     protected $status           = false;
+    protected $list             = false;
     protected $errorMessage     = false;
     protected $errorCode        = false;
     protected $response         = false;
@@ -27,6 +29,18 @@ class Result
     public function setStatus(string $param)
     {
         $this->status = $param;
+        return $this;
+    }
+
+    public function setProduct(string $param)
+    {
+        $this->product = $param;
+        return $this;
+    }
+
+    public function setList(string $param)
+    {
+        $this->list = $param;
         return $this;
     }
 
@@ -67,6 +81,16 @@ class Result
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    public function getList()
+    {
+        return $this->list;
     }
 
     public function getErrorMessage()

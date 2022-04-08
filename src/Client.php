@@ -41,6 +41,17 @@ class Client
         return $this->class->checkTaxpayerStatus($taxNumber);
     }
 
+    public function getTaxpayerList($start = 0, $limit = 100)
+    {
+        return $this->class->getTaxpayerList($start, $limit);
+    }
+
+    public function getProduct($stockCode)
+    {
+        $this->empty($stockCode, 'product stock code');
+        return $this->class->getProduct($stockCode);
+    }
+
     private function empty($param, $message)
     {
         if (empty($param)) {

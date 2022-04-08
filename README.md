@@ -199,7 +199,8 @@ if ($response->isSuccess()) {
 /**
  * $taxNumber Mükellefin vergi kimlik numarası
  */
-$response = $mysoft->checkCustomerStatus($taxNumber);
+$response = $mysoft->checkTaxpayerStatus($taxNumber);
+
 /**
  * Bool true yada false dönecektir
  */
@@ -257,25 +258,38 @@ $taxpayer->setTaxNumber('XXXXXXXXXX')
 $line = new GurmesoftInvoice\Base\Line;
 
 /**
- * Ürünün entegrasyon üzerindeki kodu
- */
-$line->setUnitCode('C62')
-/**
  * Ürün stok kodu
  */
-->setStockCode('TRLK203845')
+$line->setStockCode('TRLK203845')
+
+/**
+ * Ürün birim kodu
+ *
+ * 0 = ADET
+ * 1 = KUTU
+ * 2 = LITRE
+ * 3 = M (Metre)
+ * 4 = CM (Santimetre)
+ *
+ *  Atama yapılmaz ise ADET
+ */
+->setUnitCode('1')
+
 /**
  * Ürün adı
  */
 ->setName('Terlik')
+
 /**
  * Ürün adedi
  */
 ->setQuantity(1)
+
 /**
  * Ürün birim fiyatı
  */
 ->setUnitPrice(100)
+
 /**
  * Ürün vergi oranı
  */
@@ -312,4 +326,19 @@ $response->getStatus();
  * Atama yapılmaz ise GIB
 */
 $response = $mysoft->cancelInvoice($referenceNo, $message, $type);
+```
+
+## Extra
+
+```php
+
+/**
+ * Sistem üzerindeki tüm müekkeleflerinizi döndürür.
+ *
+ * $start başlangıç numarası varsayılan 0
+ * $limit limit adedi varsayılan 100
+*/
+
+$response = $mysoft->getTaxpayerList($start, $limit);
+$response->getList()
 ```
