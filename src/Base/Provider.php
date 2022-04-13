@@ -46,7 +46,7 @@ class Provider
             )
         );
 
-        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'EARSIVFATURA';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'EARSIVFATURA';
     }
 
     public function getScenario($code)
@@ -64,7 +64,7 @@ class Provider
                 'EARSIVBELGE'
             )
         );
-        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'EARSIVFATURA';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'EARSIVFATURA';
     }
 
     public function getInvoiceType($code)
@@ -83,7 +83,7 @@ class Provider
                 'HKSKOMISYONCU'
             )
         );
-        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'SATIS';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'SATIS';
     }
 
     public function getCurrencyCode($code)
@@ -96,7 +96,7 @@ class Provider
                 'GBP'
             )
         );
-        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'TRY';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'TRY';
     }
     
     public function getCancelCode($code)
@@ -110,7 +110,7 @@ class Provider
                 'PORTAL'
             )
         );
-        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'GIB';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'GIB';
     }
 
     public function getUnitCode($code)
@@ -124,6 +124,6 @@ class Provider
                 'CM'
             )
         );
-        return array_key_exists($code, $types[$this->provider]) ? $types[$code][$this->provider] : 'ADET';
+        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'ADET';
     }
 }
