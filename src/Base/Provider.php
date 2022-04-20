@@ -112,18 +112,4 @@ class Provider
         );
         return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'GIB';
     }
-
-    public function getUnitCode($code)
-    {
-        $types = array(
-            'Mysoft' => array(
-                'ADET',
-                'KUTU',
-                'LITRE',
-                'M',
-                'CM'
-            )
-        );
-        return array_key_exists($code, $types[$this->provider]) ? $types[$this->provider][$code] : 'ADET';
-    }
 }

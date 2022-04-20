@@ -89,7 +89,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
 
         foreach ($lines as $line) {
             $invoice['invoiceDetail'][] = array(
-                'unitCode'          => $this->getUnitCode($line->getUnitCode()),
+                'unitCode'          => 'C62',
                 'productCode'       => $line->getStockCode(),
                 'productName'       => $line->getName(),
                 'qty'               => $line->getQuantity(),

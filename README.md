@@ -263,19 +263,6 @@ $line = new GurmesoftInvoice\Base\Line;
 $line->setStockCode('TRLK203845')
 
 /**
- * Ürün birim kodu
- *
- * 0 = ADET
- * 1 = KUTU
- * 2 = LITRE
- * 3 = M (Metre)
- * 4 = CM (Santimetre)
- *
- *  Atama yapılmaz ise ADET
- */
-->setUnitCode('1')
-
-/**
  * Ürün adı
  */
 ->setName('Terlik')
