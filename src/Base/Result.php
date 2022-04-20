@@ -38,7 +38,7 @@ class Result
         return $this;
     }
 
-    public function setList(string $param)
+    public function setList(array $param)
     {
         $this->list = $param;
         return $this;
