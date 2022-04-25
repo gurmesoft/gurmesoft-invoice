@@ -35,6 +35,12 @@ class Client
         return $this->class->checkStatus($referenceNo);
     }
 
+    public function getInvoicePdf($referenceNo)
+    {
+        $this->empty($referenceNo, 'reference number');
+        return $this->class->getInvoicePdf($referenceNo);
+    }
+
     public function checkTaxpayerStatus($taxNumber)
     {
         $this->empty($taxNumber, 'tax number');
@@ -44,6 +50,13 @@ class Client
     public function getTaxpayerList($start = 0, $limit = 100)
     {
         return $this->class->getTaxpayerList($start, $limit);
+    }
+
+    public function getInvoiceList($start, $end)
+    {
+        $this->empty($start, 'start date');
+        $this->empty($end, 'end date');
+        return $this->class->getInvoiceList($start, $end);
     }
 
     public function getProduct($stockCode)

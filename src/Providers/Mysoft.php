@@ -68,14 +68,15 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             'isManuelCalculation'   => false,
             'invoiceDetail'         => array(),
             'id'                    => $doc->getId(),
-            'eDocumentType'         => $this->getDocumentType($doc->getDocumentType()),
-            'profile'               => $this->getScenario($doc->getScenario()),
-            'invoiceType'           => $this->getInvoiceType($doc->getType()),
+            'eDocumentType'         => $doc->getDocumentType(),
+            'profile'               => $doc->getScenario(),
+            'senderType'            => 'ELEKTRONIK',
+            'invoiceType'           => $doc->getType(),
             'prefix'                => $doc->getPrefix(),
             'docDate'               => $doc->getDate(),
             'docTime'               => $doc->getDate(),
-            'currencyCode'          => $this->getCurrencyCode($doc->getCurrency()),
-            'currencyRate'          => $doc->getCurrencyRate() ? $doc->getCurrencyRate() : '1',
+            'currencyCode'          => $doc->getCurrency(),
+            'currencyRate'          => $doc->getCurrencyRate(),
             'invoiceAccount'        => array(
                 'vknTckn'               => $taxpayer->getTaxNumber(),
                 'taxOfficeName'         => $taxpayer->getTaxOffice(),
@@ -116,7 +117,8 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         $result->setResponse($response);
         if ($response->succeed) {
             $result->setIsSuccess(true)
-            ->setReference($response->data->invoiceETTN);
+            ->setReference($response->data->invoiceETTN)
+            ->setDocNumber($response->data->docNo);
         } else {
             $result->setErrorCode(strval($response->errorCode))
             ->setErrorMessage($response->message);
@@ -137,7 +139,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             'headers'       => $header,
             'query'         => array(
                 'invoiceETTN'   => $referenceNo,
-                'cancelType'    => $this->getCancelCode($type),
+                'cancelType'    => $type ? $type : 'GIB' ,
                 'cancelNote'    => $message,
                 'cancelDate'    => date('m/d/Y H:i:s')
             )
@@ -184,6 +186,33 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
 
         return $result;
     }
+
+    public function getInvoicePdf($referenceNo)
+    {
+        $token  = $this->token();
+        $url    = '/api/InvoiceOutbox/getInvoiceOutboxPdfAsZip';
+        $header = array(
+            'Authorization' => "Bearer {$token}"
+        );
+        $options = array(
+            'headers'       => $header,
+            'query'         => array(
+                'invoiceETTN'   => $referenceNo
+            )
+        );
+
+        $response   = $this->request($options, $url, 'GET');
+
+        $putDir = dirname(__DIR__) . '/Temp';
+        $fileName = $referenceNo . '.zip';
+        $fullName = $putDir .'/'. $fileName;
+        file_put_contents($fullName, base64_decode($response->data));
+        header('Content-Type: application/zip');
+        header('Content-Length: ' . filesize($fullName));
+        header('Content-Disposition: attachment; filename="'.$fileName.'"');
+        readfile($fullName);
+        unlink($fullName);
+    }
     
     public function checkTaxpayerStatus($taxNumber)
     {
@@ -229,6 +258,36 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         $response   = $this->request($options, $url);
         $result     = new \GurmesoftInvoice\Base\Result;
 
+        $result->setResponse($response);
+        if ($response->data !== null) {
+            $result->setList($response->data);
+        }
+
+        return $result;
+    }
+
+    public function getInvoiceList($start, $end)
+    {
+        $token  = $this->token();
+        $url    = '/api/InvoiceOutbox/getInvoiceOutboxWithHeaderInfoList';
+        $header = array(
+            'Content-Type'  => 'application/json',
+            'Accept'        => 'application/json',
+            'Authorization' => "Bearer {$token}"
+        );
+        $options = array(
+            'headers'       => $header,
+            'body'          => json_encode(array(
+                'startDate'    => $start,
+                'endDate'      => $end,
+                'isUseDocDate' => true,
+                'limit'        => 100
+            ))
+        );
+        $response   = $this->request($options, $url);
+        $result     = new \GurmesoftInvoice\Base\Result;
+        var_dump($response);
+        die;
         $result->setResponse($response);
         if ($response->data !== null) {
             $result->setList($response->data);

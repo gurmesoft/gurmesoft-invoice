@@ -71,7 +71,7 @@ class Line
 
     public function getUnitPrice()
     {
-        return $this->unitPrice;
+        return $this->numberFormat($this->unitPrice);
     }
 
     public function getVatRate()
@@ -91,11 +91,16 @@ class Line
 
     public function getVatTotal()
     {
-        return ($this->getUnitPrice() / 100 * $this->getVatRate()) * $this->getQuantity();
+        return $this->numberFormat(($this->getUnitPrice() / 100 * $this->getVatRate()) * $this->getQuantity());
     }
 
     public function getTotal()
     {
-        return $this->getVatTotal() + ($this->getUnitPrice() * $this->getQuantity());
+        return $this->numberFormat($this->getVatTotal() + ($this->getUnitPrice() * $this->getQuantity()));
+    }
+
+    public function numberFormat($number)
+    {
+        return floatval(number_format($number, 2, '.', ''));
     }
 }

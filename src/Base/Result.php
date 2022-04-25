@@ -8,6 +8,7 @@ class Result
     protected $isEFatura        = false;
     protected $product          = false;
     protected $reference        = false;
+    protected $docNumber        = false;
     protected $status           = false;
     protected $list             = false;
     protected $errorMessage     = false;
@@ -23,6 +24,12 @@ class Result
     public function setReference(string $param)
     {
         $this->reference = $param;
+        return $this;
+    }
+
+    public function setDocNumber(string $param)
+    {
+        $this->docNumber = $param;
         return $this;
     }
 
@@ -76,6 +83,11 @@ class Result
     public function getReference()
     {
         return $this->reference;
+    }
+
+    public function getDocNumber()
+    {
+        return $this->docNumber;
     }
 
     public function getStatus()

@@ -65,52 +65,52 @@ $document->setId(rand(1111111, 999999))
 /**
  * Belge Tipi alanıdır.
  *
- * 0 = EARSIVFATURA
- * 1 = EFATURA
- * 2 = ESMM
- * 3 = EMM
+ * EARSIVFATURA
+ * EFATURA
+ * ESMM
+ * EMM
  *
- * Atama yapılmaz ise EARSIVFATURA
+ * Atama yapılmaz ise EFATURA
  */
-->setDocumentType('1')
+->setDocumentType('EARSIVFATURA')
 
 /**
  * Fatura senaryo bilgisidir.
  * Mükellef GİB e-fatura mükellefi listesinde yer alıyor ise EARSIVFATURA gönderilmelidir.
  * Mükellef sorgusu dökümanda yer almaktadır. (Adım 4.2)
  *
- * 0 = EARSIVFATURA
- * 1 = TEMELFATURA
- * 2 = TICARIFATURA
- * 3 = YOLCUBERABERFATURA
- * 4 = IHRACAT
- * 5 = KAMU
- * 6 = HKS
- * 7 = EARSIVBELGE
- * 8 = OZELFATURA
+ * TICARIFATURA
+ * EARSIVFATURA
+ * TEMELFATURA
+ * YOLCUBERABERFATURA
+ * IHRACAT
+ * KAMU
+ * HKS
+ * EARSIVBELGE
+ * OZELFATURA
  *
- * Atama yapılmaz ise EARSIVFATURA
+ * Atama yapılmaz ise TICARIFATURA
  */
-->setScenario('1')
+->setScenario('EARSIVFATURA')
 
 /**
  * Fatura tipi bilgisidir.
  * Fatura tipi İADE ise, senaryo değeri TEMELFATURA olmalıdır.
  *
- * 0 = SATIS
- * 1 = IADE
- * 2 = TEVKIFAT
- * 3 = ISTISNA
- * 4 = OZELMATRAH
- * 5 = IHRACKAYITLI
- * 6 = SGK
- * 7 = KOMISYONCU
- * 8 = HKSSATIS
- * 9 = HKSKOMISYONCU
+ * SATIS
+ * IADE
+ * TEVKIFAT
+ * ISTISNA
+ * OZELMATRAH
+ * IHRACKAYITLI
+ * SGK
+ * KOMISYONCU
+ * HKSSATIS
+ * HKSKOMISYONCU
  *
  * Atama yapılmaz ise SATIS
  */
-->setType('6')
+->setType('SATIS')
 
 /**
  * Ön ek bilgisidir.
@@ -138,20 +138,20 @@ $document->setId(rand(1111111, 999999))
 /**
  * Döviz tipi bilgisidir.
  *
- * 0 = TRY
- * 1 = USD
- * 2 = EUR
- * 3 = GBP
+ * TRY
+ * USD
+ * EUR
+ * GBP
  *
  * Atama yapılmaz ise TRY
  */
-->setCurrency('1')
+->setCurrency('TRY')
 
 /**
  * Döviz kuru bilgisidir.
  * TRY için atama yapılmayabilir
  */
-->setCurrencyRate('18,2')
+->setCurrencyRate('1')
 
 /**
  * İade fatura no bilgisidir.
@@ -183,6 +183,10 @@ if ($response->isSuccess()) {
      * Benzersiz fatura referans no
     */
     $response->getReference();
+    /**
+     * MX ile başlayan döküman no
+    */
+    $response->getDocNumber();
 } else {
     /**
      * Hata kodu ve mesajı
@@ -304,11 +308,11 @@ $response->getStatus();
  *
  * İptal Tipi ($type)
  *
- * 0 = GIB
- * 1 = NOTER
- * 2 = KEP
- * 3 = TAAHHUTLUMEKTUP
- * 4 = PORTAL
+ * GIB
+ * NOTER
+ * KEP
+ * TAAHHUTLUMEKTUP
+ * PORTAL
  *
  * Atama yapılmaz ise GIB
 */
@@ -327,5 +331,23 @@ $response = $mysoft->cancelInvoice($referenceNo, $message, $type);
 */
 
 $response = $mysoft->getTaxpayerList($start, $limit);
-$response->getList()
+$response->getList();
+
+/**
+ * Sistem üzerindeki giden faturala listesi döndürür.
+ *
+ * $startDate liste başlangıç tarihi
+ * $endDate   liste bitiş tarihi
+*/
+
+$response = $mysoft->getInvoiceList($startDate, $endDate);
+$response->getList();
+
+/**
+ * Faturanın PDF ini indirmenizi sağlar.
+ * Bu özelliği kullanabilmek için Php allow_url_fopen = 1 olmalıdır.
+ *
+*/
+
+$mysoft->getInvoicePdf($referenceNo);
 ```
