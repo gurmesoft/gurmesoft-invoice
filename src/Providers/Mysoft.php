@@ -118,7 +118,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         if ($response->succeed) {
             $result->setIsSuccess(true)
             ->setReference($response->data->invoiceETTN)
-            ->setDocNumber($response->data->docNo);
+            ->setDocumentNo($response->data->docNo);
         } else {
             $result->setErrorCode(strval($response->errorCode))
             ->setErrorMessage($response->message);
@@ -258,11 +258,28 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         $response   = $this->request($options, $url);
         $result     = new \GurmesoftInvoice\Base\Result;
 
+        $list = array();
         $result->setResponse($response);
-        if ($response->data !== null) {
-            $result->setList($response->data);
-        }
 
+        if ($response->data !== null) {
+            foreach ($response->data as $payer) {
+                $taxpayer = new \GurmesoftInvoice\Base\Taxpayer;
+                $taxpayer->setTaxNumber($payer->identifierNumber)
+                ->setTaxOffice($payer->taxOffice->name ? $payer->taxOffice->name : '' )
+                ->setAlias($payer->accountName)
+                ->setAddress($payer->streetName)
+                ->setDistrict($payer->citySubdivision)
+                ->setCity($payer->city->name)
+                ->setCountry('Türkiye')
+                ->setPhone($payer->telephone1)
+                ->setEmail($payer->email1);
+                
+                array_push($list, $taxpayer);
+            }
+
+            $result->setIsSuccess(true)->setList($list);
+        }
+        
         return $result;
     }
 
@@ -286,13 +303,31 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
         );
         $response   = $this->request($options, $url);
         $result     = new \GurmesoftInvoice\Base\Result;
-        var_dump($response);
-        die;
-        $result->setResponse($response);
-        if ($response->data !== null) {
-            $result->setList($response->data);
-        }
 
+        $list = array();
+        $result->setResponse($response);
+
+        if ($response->data !== null) {
+            foreach ($response->data as $invoice) {
+                $doc = new \GurmesoftInvoice\Base\Invoice;
+                $taxpayer = new \GurmesoftInvoice\Base\Taxpayer;
+
+                $taxpayer->setAlias($invoice->accountName)
+                ->setTaxNumber($invoice->vknTckn);
+
+                $doc->setReferenceNo($invoice->ettn)
+                ->setDocumentNo($invoice->docNo)
+                ->setScenario($invoice->profile)
+                ->setStatus($invoice->invoiceStatusText)
+                ->setType($invoice->invoiceType)
+                ->setTaxpayer($taxpayer);
+    
+                array_push($list, $doc);
+            }
+
+            $result->setIsSuccess(true)->setList($list);
+        }
+        
         return $result;
     }
 

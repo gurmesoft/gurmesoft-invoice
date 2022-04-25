@@ -184,9 +184,9 @@ if ($response->isSuccess()) {
     */
     $response->getReference();
     /**
-     * MX ile başlayan döküman no
+     * MX, KLF, FTR vb. ile başlayan döküman no
     */
-    $response->getDocNumber();
+    $response->getDocumentNo();
 } else {
     /**
      * Hata kodu ve mesajı
@@ -336,8 +336,8 @@ $response->getList();
 /**
  * Sistem üzerindeki giden faturala listesi döndürür.
  *
- * $startDate liste başlangıç tarihi
- * $endDate   liste bitiş tarihi
+ * $startDate liste başlangıç tarihi  '01-01-2022'
+ * $endDate   liste bitiş tarihi      '26-04-2022'
 */
 
 $response = $mysoft->getInvoiceList($startDate, $endDate);

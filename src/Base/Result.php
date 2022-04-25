@@ -8,7 +8,7 @@ class Result
     protected $isEFatura        = false;
     protected $product          = false;
     protected $reference        = false;
-    protected $docNumber        = false;
+    protected $documentNo       = false;
     protected $status           = false;
     protected $list             = false;
     protected $errorMessage     = false;
@@ -27,9 +27,9 @@ class Result
         return $this;
     }
 
-    public function setDocNumber(string $param)
+    public function setDocumentNo(string $param)
     {
-        $this->docNumber = $param;
+        $this->documentNo = $param;
         return $this;
     }
 
@@ -85,9 +85,9 @@ class Result
         return $this->reference;
     }
 
-    public function getDocNumber()
+    public function getDocumentNo()
     {
-        return $this->docNumber;
+        return $this->documentNo;
     }
 
     public function getStatus()

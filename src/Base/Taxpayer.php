@@ -15,6 +15,7 @@ class Taxpayer
     protected $district;
     protected $city;
     protected $country;
+    protected $alias;
 
     public function setTaxNumber(string $param)
     {
@@ -82,6 +83,12 @@ class Taxpayer
         return $this;
     }
 
+    public function setAlias(string $param)
+    {
+        $this->alias = $param;
+        return $this;
+    }
+
     public function getTaxNumber()
     {
         return $this->taxNumber;
@@ -135,5 +142,10 @@ class Taxpayer
     public function getCountry()
     {
         return $this->country;
+    }
+
+    public function getAlias()
+    {
+        return $this->alias;
     }
 }

@@ -17,9 +17,11 @@ class Invoice
     protected $currency = 'TRY';
     protected $currencyRate = '1';
     protected $referenceNo;
+    protected $documentNo;
     protected $subTotal;
     protected $vatTotal;
     protected $total;
+    protected $status;
 
     public function addLine(\GurmesoftInvoice\Base\Line $item)
     {
@@ -93,6 +95,12 @@ class Invoice
         return $this;
     }
 
+    public function setDocumentNo(string $param)
+    {
+        $this->documentNo = $param;
+        return $this;
+    }
+
     public function setSubTotal(string $param)
     {
         $this->subTotal = $param;
@@ -108,6 +116,12 @@ class Invoice
     public function setTotal(string $param)
     {
         $this->total = $param;
+        return $this;
+    }
+
+    public function setStatus(string $param)
+    {
+        $this->status = $param;
         return $this;
     }
 
@@ -172,6 +186,11 @@ class Invoice
         return $this->referenceNo;
     }
 
+    public function getDocumentNo()
+    {
+        return $this->documentNo;
+    }
+
     public function getSubTotal()
     {
         return $this->subTotal;
@@ -185,5 +204,10 @@ class Invoice
     public function getTotal()
     {
         return $this->total;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
