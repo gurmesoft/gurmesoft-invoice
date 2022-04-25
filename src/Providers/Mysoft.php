@@ -265,7 +265,7 @@ class Mysoft extends \GurmesoftInvoice\Base\Provider
             foreach ($response->data as $payer) {
                 $taxpayer = new \GurmesoftInvoice\Base\Taxpayer;
                 $taxpayer->setTaxNumber($payer->identifierNumber)
-                ->setTaxOffice($payer->taxOffice->name ? $payer->taxOffice->name : '' )
+                ->setTaxOffice($payer->taxOffice->name ? $payer->taxOffice->name : '')
                 ->setAlias($payer->accountName)
                 ->setAddress($payer->streetName)
                 ->setDistrict($payer->citySubdivision)

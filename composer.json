@@ -1,5 +1,6 @@
 {
     "name": "gurmesoft/invoice",
+    "version": "1.0.0",
     "description": "E-Fatura oluşturma vendor pakedi",
     "license": "MIT",
     "minimum-stability": "dev",
